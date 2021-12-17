@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MoshVidlyProject.Models;
 
 namespace MoshVidlyProject.Controllers
 {
@@ -11,7 +12,8 @@ namespace MoshVidlyProject.Controllers
         // GET: Movies/Random
         public ActionResult Random()
         {
-            return Content("Random");
+            var movie = new Movie() {Name = "Shrek?"};
+            return View(movie);
         }
         public ActionResult ByReleaseDate(int year, int month)
         {
