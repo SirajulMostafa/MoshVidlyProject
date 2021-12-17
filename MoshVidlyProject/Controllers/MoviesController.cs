@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MoshVidlyProject.Models;
+using MoshVidlyProject.ViewModel;
 
 namespace MoshVidlyProject.Controllers
 {
@@ -13,7 +14,19 @@ namespace MoshVidlyProject.Controllers
         public ActionResult Random()
         {
             var movie = new Movie() {Name = "Shrek?"};
-            return View(movie);
+            var customers  = new List<Customer>()
+            {
+                new Customer(){Name = "Customer 1"},
+                new Customer(){Name = "Customer 2"}
+            };
+
+            var viewModel = new RandomMovieViewModel()
+            {
+                Movie = movie,//initialized value//pass the movie object
+                Customers = customers
+            };
+             
+            return View(viewModel);
         }
         public ActionResult ByReleaseDate(int year, int month)
         {
