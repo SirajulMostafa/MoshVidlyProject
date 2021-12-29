@@ -26,7 +26,7 @@ namespace MoshVidlyProject.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details()
         {
 
             return Content("hello details");
