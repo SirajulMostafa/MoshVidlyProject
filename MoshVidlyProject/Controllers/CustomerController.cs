@@ -1,35 +1,46 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using MoshVidlyProject.Models;
-using MoshVidlyProject.ViewModel;
 
 namespace MoshVidlyProject.Controllers
 {
     public class CustomerController : Controller
     {
+        private readonly ServicesContext _context;
+
+        public CustomerController()
+        {
+            _context = new ServicesContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
         public ActionResult Index()
         {
-            ViewBag.Message = "Your application description page.";
-            var movie = new Movie() { Name = "Shrek?" };
-            var customers = new List<Customer>()
+            var customers = _context.Customers.ToList();
+            if (customers.Count == 0)
             {
-                new Customer(){Name = "Customer 1"},
-                new Customer(){Name = "Customer 2"}
-            };
+                return Content("NOT DATA FOUND");
+            }
+            return View(customers);
 
-            var viewModel = new RandomMovieViewModel()
-            {
-                Movie = movie,//initialized value//pass the movie object
-                Customers = customers
-            };
 
-            return View(viewModel);
         }
 
-        public ActionResult Details()
+        public ActionResult Details(int id)
         {
-
-            return Content("hello details");
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (customer == null)
+                return HttpNotFound();
+            return View(customer);
         }
+
+      /*  private IEnumerable<Customer> getCustomers()
+        {
+            return 
+        }*/
     }
 }
