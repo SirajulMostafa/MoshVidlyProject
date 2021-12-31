@@ -13,20 +13,20 @@ namespace MoshVidlyProject
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
+           /* routes.MapRoute(
                 "Customerlist",  
                 "{customer}/{details}/{id}",
                 new { controller = "Customer", action = "Details",id=UrlParameter.Optional}
                
-            );
-            routes.MapRoute(
+            );*/
+           /* routes.MapRoute(
                 "MoviesByReleaseDate",
                "{movies}/{released}/{year}/{month}",
                  new { controller = "Movies", action = "ByReleaseDate",},
                 new { year=@"\d{4}",month=@"\d{2}"} 
                 );
 
-
+    */
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

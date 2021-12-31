@@ -32,12 +32,13 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(m => item.Name)
             </td>
             <td>@item.MemberShipType.DiscountRate</td>
             <td>
 
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Create", "Create")
               
 
             </td>

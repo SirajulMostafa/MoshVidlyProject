@@ -31,6 +31,13 @@ namespace MoshVidlyProject.Controllers
 
         }
 
+        public ActionResult Create()
+        {
+
+            return View();
+        }
+
+
         public ActionResult Details(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);

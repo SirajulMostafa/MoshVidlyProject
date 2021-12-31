@@ -144,6 +144,14 @@
     <Compile Include="Migrations\202112291652004_ApplyAnnotationToCustomerName.designer.cs">
       <DependentUpon>202112291652004_ApplyAnnotationToCustomerName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112311603400_AddBirthdateToCustomer.cs" />
+    <Compile Include="Migrations\202112311603400_AddBirthdateToCustomer.designer.cs">
+      <DependentUpon>202112311603400_AddBirthdateToCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112311618372_CustomeModelModify.cs" />
+    <Compile Include="Migrations\202112311618372_CustomeModelModify.designer.cs">
+      <DependentUpon>202112311618372_CustomeModelModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\MemberShipType.cs" />
@@ -207,6 +215,7 @@
     <Content Include="Views\Shared\_navbar.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\Details.cshtml" />
+    <Content Include="Views\Customer\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -253,6 +262,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112291652004_ApplyAnnotationToCustomerName.resx">
       <DependentUpon>202112291652004_ApplyAnnotationToCustomerName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112311603400_AddBirthdateToCustomer.resx">
+      <DependentUpon>202112311603400_AddBirthdateToCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112311618372_CustomeModelModify.resx">
+      <DependentUpon>202112311618372_CustomeModelModify.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
