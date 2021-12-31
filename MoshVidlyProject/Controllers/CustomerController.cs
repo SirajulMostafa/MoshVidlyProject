@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Data.Entity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using MoshVidlyProject.Models;
@@ -20,7 +21,7 @@ namespace MoshVidlyProject.Controllers
         }
         public ActionResult Index()
         {
-            var customers = _context.Customers.ToList();
+            var customers = _context.Customers.Include(c=> c.MemberShipType).ToList();
             if (customers.Count == 0)
             {
                 return Content("NOT DATA FOUND");
