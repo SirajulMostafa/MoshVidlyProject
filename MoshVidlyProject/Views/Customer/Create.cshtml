@@ -7,7 +7,7 @@
 
 <h2>title</h2>
 
-@using (Html.BeginForm("create", "Customer"))
+@using (Html.BeginForm("Create", "Customer"))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Name)
@@ -30,4 +30,5 @@
         @Html.DropDownListFor(m => m.Customer.MemberShipTypeId,new SelectList(Model.MemberShipType,"Id","Name" ),"Select Membership type", new { @class = "form-control" })
 
     </div>
+    <button Type="submit" class="btn btn-outline-primary"> Save</button>
 }

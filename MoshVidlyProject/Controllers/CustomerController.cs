@@ -31,7 +31,7 @@ namespace MoshVidlyProject.Controllers
 
 
         }
-
+        [HttpGet]
         public ActionResult Create()
         {
             var memberShipTypes = _context.MemberShipTypes.ToList();
@@ -43,6 +43,15 @@ namespace MoshVidlyProject.Controllers
             };
 
             return View(viewModel);
+        }
+        [HttpPost]
+        //public ActionResult Create( CreateCustomerViewModel viewModel)
+        public ActionResult Create( Customer customer)
+        {
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index","Customer");
         }
 
 
