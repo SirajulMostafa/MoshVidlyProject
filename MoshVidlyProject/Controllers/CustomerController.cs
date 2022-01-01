@@ -42,7 +42,7 @@ namespace MoshVidlyProject.Controllers
                 
             };
 
-            return View(viewModel);
+            return View("CustomerForm",viewModel);
         }
         [HttpPost]
         //public ActionResult Create( CreateCustomerViewModel viewModel)
@@ -61,6 +61,22 @@ namespace MoshVidlyProject.Controllers
             if (customer == null)
                 return HttpNotFound();
             return View(customer);
+        }
+
+        public ActionResult Edit(int id)
+        {
+
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (customer==null)
+                return HttpNotFound();
+
+            var viewModel = new CreateCustomerViewModel
+            {
+                Customer = customer,
+                MemberShipType =_context.MemberShipTypes.ToList()
+            };
+
+             return View("CustomerForm",viewModel);
         }
 
       /*  private IEnumerable<Customer> getCustomers()
