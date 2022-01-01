@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using MoshVidlyProject.Models;
+using MoshVidlyProject.ViewModel;
 
 namespace MoshVidlyProject.Controllers
 {
@@ -33,8 +34,15 @@ namespace MoshVidlyProject.Controllers
 
         public ActionResult Create()
         {
+            var memberShipTypes = _context.MemberShipTypes.ToList();
+            var viewModel = new CreateCustomerViewModel
+            {
+               Customer = new Customer(),
+               MemberShipType = memberShipTypes,
+                
+            };
 
-            return View();
+            return View(viewModel);
         }
 
 
