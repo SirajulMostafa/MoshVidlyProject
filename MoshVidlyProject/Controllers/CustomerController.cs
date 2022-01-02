@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Collections.Generic;
+using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Web.Mvc;
 using MoshVidlyProject.Models;
@@ -32,7 +33,7 @@ namespace MoshVidlyProject.Controllers
 
         }
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult Save()
         {
             var memberShipTypes = _context.MemberShipTypes.ToList();
             var viewModel = new CreateCustomerViewModel
@@ -46,9 +47,25 @@ namespace MoshVidlyProject.Controllers
         }
         [HttpPost]
         //public ActionResult Create( CreateCustomerViewModel viewModel)
-        public ActionResult Create( Customer customer)
+        public ActionResult Save( Customer customer)
         {
-            _context.Customers.Add(customer);
+            if (customer.Id==0)
+            {
+                _context.Customers.Add(customer);
+
+            }
+            else
+            {
+                var customerDb = _context.Customers.Single(c => c.Id == customer.Id);
+               // Mapper.Map(customer, customerDb);
+
+                customerDb.Name = customer.Name;
+                customerDb.Birthdate=customer.Birthdate;
+                customerDb.MemberShipTypeId = customer.MemberShipTypeId;
+                customerDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+
+            }
+         
             _context.SaveChanges();
 
             return RedirectToAction("Index","Customer");

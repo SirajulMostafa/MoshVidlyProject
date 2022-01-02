@@ -7,7 +7,7 @@
 
 <h2>title</h2>
 
-@using (Html.BeginForm("Create", "Customer"))
+@using (Html.BeginForm("Save", "Customer"))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Name)
@@ -31,5 +31,15 @@
             Subscribe to news letter?
         </label>
     </div>
-    <button Type="submit" class="btn btn-outline-primary">Save</button>
+    @Html.HiddenFor(m => m.Customer.Id)
+
+    if (Model.Customer.Id == 0)
+    {
+        <button Type="submit" class="btn btn-outline-primary">Save</button>
+    }
+    else
+    {
+        <button Type="submit" class="btn btn-outline-primary">Update</button>   
+    }
+   
 }
