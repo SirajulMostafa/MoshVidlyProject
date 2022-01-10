@@ -9,6 +9,8 @@ namespace MoshVidlyProject.Models
     public class ServicesContext:DbContext
     {
        public DbSet<Customer> Customers { get; set; }   
-       public DbSet<MemberShipType> MemberShipTypes { get; set; }   
+       public DbSet<MemberShipType> MemberShipTypes { get; set; }
+       public DbSet<Movie> Movies { get; set; }
+       public DbSet<Genre> Genres { get; set; }
     }
 }

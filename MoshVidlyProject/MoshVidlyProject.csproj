@@ -156,8 +156,17 @@
     <Compile Include="Migrations\202201011453218_AddNameFieldForMemberShipTypeModel.designer.cs">
       <DependentUpon>202201011453218_AddNameFieldForMemberShipTypeModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201101330438_MoviesAndGenreCreateAndMakeRelation.cs" />
+    <Compile Include="Migrations\202201101330438_MoviesAndGenreCreateAndMakeRelation.designer.cs">
+      <DependentUpon>202201101330438_MoviesAndGenreCreateAndMakeRelation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201101349021_MoviesAndGenreCreateAndMakeRelation2.cs" />
+    <Compile Include="Migrations\202201101349021_MoviesAndGenreCreateAndMakeRelation2.designer.cs">
+      <DependentUpon>202201101349021_MoviesAndGenreCreateAndMakeRelation2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\MemberShipType.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\ServicesContext.cs" />
@@ -221,6 +230,11 @@
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\Details.cshtml" />
     <Content Include="Views\Customer\CustomerForm.cshtml" />
+    <Content Include="Views\Movies\Create.cshtml" />
+    <Content Include="Views\Movies\Delete.cshtml" />
+    <Content Include="Views\Movies\Details.cshtml" />
+    <Content Include="Views\Movies\Edit.cshtml" />
+    <Content Include="Views\Movies\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -276,6 +290,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201011453218_AddNameFieldForMemberShipTypeModel.resx">
       <DependentUpon>202201011453218_AddNameFieldForMemberShipTypeModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201101330438_MoviesAndGenreCreateAndMakeRelation.resx">
+      <DependentUpon>202201101330438_MoviesAndGenreCreateAndMakeRelation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201101349021_MoviesAndGenreCreateAndMakeRelation2.resx">
+      <DependentUpon>202201101349021_MoviesAndGenreCreateAndMakeRelation2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

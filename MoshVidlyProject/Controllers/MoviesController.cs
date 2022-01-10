@@ -1,38 +1,133 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MoshVidlyProject.Models;
-using MoshVidlyProject.ViewModel;
 
 namespace MoshVidlyProject.Controllers
 {
     public class MoviesController : Controller
     {
-        // GET: Movies/Random
-        public ActionResult Random()
-        {
-            var movie = new Movie() {Name = "Shrek?"};
-            var customers  = new List<Customer>()
-            {
-                new Customer(){Name = "Customer 1"},
-                new Customer(){Name = "Customer 2"}
-            };
+        private ServicesContext db = new ServicesContext();
 
-            var viewModel = new RandomMovieViewModel()
-            {
-                Movie = movie,//initialized value//pass the movie object
-                Customers = customers
-            };
-             
-            return View(viewModel);
-        }
-        public ActionResult ByReleaseDate(int year, int month)
+        // GET: Movies
+        public async Task<ActionResult> Index()
         {
-
-            return Content(year+"/"+month);
+            var movies = db.Movies.Include(m => m.Genre);
+            return View(await movies.ToListAsync());
         }
-        
+
+        // GET: Movies/Details/5
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Movie movie = await db.Movies.FindAsync(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            return View(movie);
+        }
+
+        // GET: Movies/Create
+        public ActionResult Create()
+        {
+            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
+            return View();
+        }
+
+        // POST: Movies/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "Id,Name,GenreId,DateAdded,ReleaseDate,NumberInStock,NumberAvailable")] Movie movie)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Movies.Add(movie);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", movie.GenreId);
+            return View(movie);
+        }
+
+        // GET: Movies/Edit/5
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Movie movie = await db.Movies.FindAsync(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", movie.GenreId);
+            return View(movie);
+        }
+
+        // POST: Movies/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,GenreId,DateAdded,ReleaseDate,NumberInStock,NumberAvailable")] Movie movie)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(movie).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", movie.GenreId);
+            return View(movie);
+        }
+
+        // GET: Movies/Delete/5
+        public async Task<ActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Movie movie = await db.Movies.FindAsync(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            return View(movie);
+        }
+
+        // POST: Movies/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            Movie movie = await db.Movies.FindAsync(id);
+            db.Movies.Remove(movie);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
