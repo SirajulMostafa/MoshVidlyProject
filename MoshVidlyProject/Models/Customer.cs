@@ -11,7 +11,7 @@ namespace MoshVidlyProject.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Customer Name should not be Empty  and String  max length 255  ")]
         [StringLength(255)]
         public string Name { get; set; }
 
