@@ -12,8 +12,8 @@ namespace MoshVidlyProject.Models
         {
             var customer = (Customer)validationContext.ObjectInstance;
 
-            if (//customer.MemberShipTypeId == MemberShipType.Unknown ||
-                customer.MemberShipTypeId == 1)
+            if (customer.MemberShipTypeId == MemberShipType.Unknown ||
+                customer.MemberShipTypeId == MemberShipType.PayAsYouGo)
                 return ValidationResult.Success;
 
             if (customer.Birthdate == null)
