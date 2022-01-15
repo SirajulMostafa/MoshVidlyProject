@@ -49,6 +49,19 @@ namespace MoshVidlyProject.Controllers
         //public ActionResult Create( CreateCustomerViewModel viewModel)
         public ActionResult Save( Customer customer)
         {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new CreateCustomerViewModel
+                {
+                    Customer = new Customer(),
+                    MemberShipType = _context.MemberShipTypes.ToList(),
+
+                };
+
+                return View("CustomerForm", viewModel);
+
+            }
+             
             if (customer.Id==0)
             {
                 _context.Customers.Add(customer);
