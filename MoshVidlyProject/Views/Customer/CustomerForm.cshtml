@@ -24,7 +24,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.MemberShipTypeId)
         @Html.DropDownListFor(m => m.Customer.MemberShipTypeId, new SelectList(Model.MemberShipType, "Id", "Name"), "Select Membership type", new { @class = "form-control" })
-
+        @Html.ValidationMessageFor(m => m.Customer.MemberShipTypeId, "", new { @class = "text-danger" })
     </div>
     <div class="form-check">
         <label>
