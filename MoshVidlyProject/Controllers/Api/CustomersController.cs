@@ -5,15 +5,24 @@ using System.Web.Http;
 
 namespace MoshVidlyProject.Controllers.Api
 {
-    public class CustomerController : ApiController
+    public class CustomersController : ApiController
     {
-        private ServicesContext db = new ServicesContext();
 
-        // GET:/api/ Customer
-        public IEnumerable<Customer> getCustomers()
+
+        private  ServicesContext db;
+        public CustomersController()
         {
-            return db.Customers.ToList();
-           
+            db = new ServicesContext();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+        }
+        // GET:/api/ Customer
+        public IEnumerable<Customer> GetCustomers()
+        {
+            var customers = db.Customers.ToList();
+            return customers;
         }
         //GET /api Customers/1
         public Customer GetCustomer(int Id)

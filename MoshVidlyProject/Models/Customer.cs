@@ -7,7 +7,7 @@ using System.Web;
 
 namespace MoshVidlyProject.Models
 {
-    public class Customer : IEnumerable
+    public class Customer
     {
         public int Id { get; set; }
 
@@ -26,9 +26,5 @@ namespace MoshVidlyProject.Models
         [Min18YearsIfAMember]
         public DateTime? Birthdate { get; set; }
 
-        public IEnumerator GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
