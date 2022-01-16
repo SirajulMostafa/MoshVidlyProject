@@ -49,10 +49,11 @@ namespace MoshVidlyProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,GenreId,DateAdded,ReleaseDate,NumberInStock,NumberAvailable")] Movie movie)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Name,GenreId,ReleaseDate,NumberInStock,NumberAvailable")] Movie movie)
         {
             if (ModelState.IsValid)
             {
+                movie.DateAdded = DateTime.Now;
                 db.Movies.Add(movie);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
