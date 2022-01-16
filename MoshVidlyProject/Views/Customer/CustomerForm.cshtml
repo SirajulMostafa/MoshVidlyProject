@@ -39,6 +39,7 @@
         </label>
     </div>
     @Html.HiddenFor(m => m.Customer.Id)
+    @Html.AntiForgeryToken();
 
     if (Model.Customer.Id == 0)
     {
@@ -48,7 +49,7 @@
     {
         <button Type="submit" class="btn btn-outline-primary">Update</button>
     }
-
+   
 }
 
 @section scripts

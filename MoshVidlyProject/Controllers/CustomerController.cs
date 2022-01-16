@@ -47,6 +47,7 @@ namespace MoshVidlyProject.Controllers
         }
         [HttpPost]
         //public ActionResult Create( CreateCustomerViewModel viewModel)
+        [ValidateAntiForgeryToken]
         public ActionResult Save( Customer customer)
         {
             if (!ModelState.IsValid)
