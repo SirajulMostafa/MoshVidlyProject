@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections;
+﻿using MoshVidlyProject.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MoshVidlyProject.Models
+namespace MoshVidlyProject.Dto
 {
-    public class Customer
+    public class CustomerDto
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage ="Customer Name should not be Empty  and String  max length 255  ")]
+        [Required]
         [StringLength(255)]
         public string Name { get; set; }
 
         public bool IsSubscribedToNewsletter { get; set; }
 
-        public MemberShipType MemberShipType { get; set; }
-
-        [Display(Name = "Membership Type")]
         public byte MemberShipTypeId { get; set; }
-
-        [Display(Name = "Date of Birth")]
+     
         [Min18YearsIfAMember]
         public DateTime? Birthdate { get; set; }
 
