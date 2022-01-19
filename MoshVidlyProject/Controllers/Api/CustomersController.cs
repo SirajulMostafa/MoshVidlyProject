@@ -1,4 +1,6 @@
-﻿using MoshVidlyProject.Models;
+﻿using AutoMapper;
+using MoshVidlyProject.Dto;
+using MoshVidlyProject.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -19,47 +21,52 @@ namespace MoshVidlyProject.Controllers.Api
             db.Dispose();
         }
         // GET:/api/ Customer
-        public IEnumerable<Customer> GetCustomers()
+        public IEnumerable<CustomerDto> GetCustomers()
         {
-            var customers = db.Customers.ToList();
+            var customers = db.Customers.ToList().Select(Mapper.Map<Customer,CustomerDto>);
             return customers;
         }
         //GET /api Customers/1
-        public Customer GetCustomer(int Id)
+        public CustomerDto GetCustomer(int Id)
         {
             var customer = db.Customers.SingleOrDefault(x => x.Id == Id);
             if (customer == null)
                 throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
-            return customer;
+            return Mapper.Map<Customer,CustomerDto>(customer);
 
         }
         //POST /api/customers
         [System.Web.Http.HttpPost]
-        public Customer CreatCustomer(Customer customer)
+        public CustomerDto CreatCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
+
+            var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
             db.Customers.Add(customer);
             db.SaveChanges();
+            customerDto.Id = customer.Id;
 
-            return customer;
+            return customerDto;
 
 
         }
         //PUT /api/customer/1
         [HttpPut]
-        public void UpdateCustomer(int Id, Customer customer)
+        public void UpdateCustomer(int Id, CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
             var customerInDb = db.Customers.SingleOrDefault(c=>c.Id==Id);
             if (customerInDb == null)
                 throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
-        
-              customerInDb.Name = customer.Name;
-            customerInDb.Birthdate = customer.Birthdate;
-            customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
-            customerInDb.MemberShipTypeId = customer.MemberShipTypeId;
+
+            Mapper.Map<CustomerDto, Customer>(customerDto, customerInDb);
+/*
+            customerInDb.Name = customerDto.Name;
+            customerInDb.Birthdate = customerDto.Birthdate;
+            customerInDb.IsSubscribedToNewsletter = customerDto.IsSubscribedToNewsletter;
+            customerInDb.MemberShipTypeId = customerDto.MemberShipTypeId;*/
             db.SaveChanges();
                     }
         // DELETE   /api/customers/1

@@ -9,7 +9,7 @@ public static class WebApiConfig
 
         config.Routes.MapHttpRoute(
             name: "DefaultApi",
-            routeTemplate: "api/{controller}/{Id}",
+            routeTemplate: "api/{controller}/{id}",
             defaults: new { id = RouteParameter.Optional }
         );
 
