@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using Newtonsoft.Json.Serialization;
+using System.Web.Http;
 
 public static class WebApiConfig
 {
@@ -13,9 +14,10 @@ public static class WebApiConfig
             defaults: new { id = RouteParameter.Optional }
         );
 
-        var json = config.Formatters.JsonFormatter;
-        json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+        var setting = config.Formatters.JsonFormatter;
+        setting.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
         config.Formatters.Remove(config.Formatters.XmlFormatter);
+        setting.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         // configure additional webapi settings here..
     }
 }
