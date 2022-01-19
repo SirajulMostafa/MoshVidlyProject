@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MoshVidlyProject.Dto;
 using MoshVidlyProject.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -27,28 +28,27 @@ namespace MoshVidlyProject.Controllers.Api
             return customers;
         }
         //GET /api Customers/1
-        public CustomerDto GetCustomer(int Id)
+        public IHttpActionResult GetCustomer(int Id)
         {
             var customer = db.Customers.SingleOrDefault(x => x.Id == Id);
             if (customer == null)
-                throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
-            return Mapper.Map<Customer,CustomerDto>(customer);
+             return NotFound();
+                return Ok(Mapper.Map<Customer,CustomerDto>(customer));
 
         }
         //POST /api/customers
         [System.Web.Http.HttpPost]
-        public CustomerDto CreatCustomer(CustomerDto customerDto)
+        public IHttpActionResult CreatCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
-                throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
+               return BadRequest();
 
             var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
             db.Customers.Add(customer);
             db.SaveChanges();
             customerDto.Id = customer.Id;
 
-            return customerDto;
-
+            return Created(new Uri(Request.RequestUri + "/" + customer.Id), customerDto);
 
         }
         //PUT /api/customer/1

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Serialization;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System.Web.Http;
 
 public static class WebApiConfig
@@ -18,6 +19,7 @@ public static class WebApiConfig
         setting.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
         config.Formatters.Remove(config.Formatters.XmlFormatter);
         setting.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        setting.SerializerSettings.Formatting = Formatting.Indented;
         // configure additional webapi settings here..
     }
 }
