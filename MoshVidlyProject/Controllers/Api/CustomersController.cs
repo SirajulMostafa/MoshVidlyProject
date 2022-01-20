@@ -22,17 +22,17 @@ namespace MoshVidlyProject.Controllers.Api
             db.Dispose();
         }
         // GET:/api/ Customer
-        public IEnumerable<CustomerDto> GetCustomers()
+        public IHttpActionResult GetCustomers()
         {
             var customers = db.Customers.ToList().Select(Mapper.Map<Customer,CustomerDto>);
-            return customers;
+            return Ok(customers);
         }
         //GET /api Customers/1
         public IHttpActionResult GetCustomer(int id)
         {
             var customer = db.Customers.SingleOrDefault(x => x.Id == id);
             if (customer == null)
-             return NotFound();
+             return NotFound(); 
             return Ok(Mapper.Map<Customer,CustomerDto>(customer));
 
         }
@@ -71,8 +71,8 @@ namespace MoshVidlyProject.Controllers.Api
             db.SaveChanges();
             return Ok();
         }
-        // DELETE   /api/customers/1
-        [System.Web.Http.HttpDelete]
+        // DELETE /api/customers/1
+        [HttpDelete]
         public IHttpActionResult DeleteCustomer(int id)
         {
             var customerInDb = db.Customers.SingleOrDefault(c=>c.Id==id);
