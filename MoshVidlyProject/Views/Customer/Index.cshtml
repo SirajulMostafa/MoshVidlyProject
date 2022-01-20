@@ -40,7 +40,7 @@
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Create", "Save")
-                <button data-customer-id="@item.Id" class="btn-link delete-link">Delete</button>
+                <button data-customer-id="@item.Id" class="btn btn-link delete-link">Delete</button>
 
 
             </td>
@@ -55,19 +55,26 @@
     <script>
         $(document).ready(function() {
             $("#customers .delete-link").on("click",
-                function () {
+                function() {
                     var button = $(this);
-                    if (confirm("Are You Sure  to delete customer account!")) {
-                        $.ajax({
-                            url: "/api/customers/" + button.attr("data-customer-id"),
-                            method: "DELETE",
-                            success:function() {
-                               // confirm("delete success ");
-                               button.parents("tr").remove();
+                    bootbox.confirm({
+                        size: "small",
+                        message: "Are You Sure  to delete customer account!",
+                        callback: function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/customers/" + button.attr("data-customer-id"),
+                                    method: "DELETE",
+                                    success: function() {
+                                        // confirm("delete success ");
+                                        button.parents("tr").remove();
+                                    }
+                                });
                             }
+
+                        }
                     });
-                    }
-                   
+
                 });
         });
 
