@@ -28,17 +28,17 @@ namespace MoshVidlyProject.Controllers.Api
             return customers;
         }
         //GET /api Customers/1
-        public IHttpActionResult GetCustomer(int Id)
+        public IHttpActionResult GetCustomer(int id)
         {
-            var customer = db.Customers.SingleOrDefault(x => x.Id == Id);
+            var customer = db.Customers.SingleOrDefault(x => x.Id == id);
             if (customer == null)
              return NotFound();
-                return Ok(Mapper.Map<Customer,CustomerDto>(customer));
+            return Ok(Mapper.Map<Customer,CustomerDto>(customer));
 
         }
         //POST /api/customers
         [System.Web.Http.HttpPost]
-        public IHttpActionResult CreatCustomer(CustomerDto customerDto)
+        public IHttpActionResult CreateCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
                return BadRequest();
@@ -52,14 +52,15 @@ namespace MoshVidlyProject.Controllers.Api
 
         }
         //PUT /api/customer/1
-        [HttpPut]
-        public void UpdateCustomer(int Id, CustomerDto customerDto)
+        [System.Web.Http.HttpPut]
+        public IHttpActionResult UpdateCustomer(int id, CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
-                throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
-            var customerInDb = db.Customers.SingleOrDefault(c=>c.Id==Id);
+                return BadRequest();
+            var customerInDb = db.Customers.SingleOrDefault(c=>c.Id==id);
             if (customerInDb == null)
-                throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
+                return NotFound();
+                // throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
 
             Mapper.Map<CustomerDto, Customer>(customerDto, customerInDb);
 /*
@@ -68,17 +69,20 @@ namespace MoshVidlyProject.Controllers.Api
             customerInDb.IsSubscribedToNewsletter = customerDto.IsSubscribedToNewsletter;
             customerInDb.MemberShipTypeId = customerDto.MemberShipTypeId;*/
             db.SaveChanges();
-                    }
+            return Ok();
+        }
         // DELETE   /api/customers/1
-        [HttpDelete]
-        public void DeleteCustomer(int Id)
+        [System.Web.Http.HttpDelete]
+        public IHttpActionResult DeleteCustomer(int id)
         {
-            var customerinDb = db.Customers.SingleOrDefault(c=>c.Id==Id);
-            if (customerinDb == null)
+            var customerInDb = db.Customers.SingleOrDefault(c=>c.Id==id);
+            if (customerInDb == null)
+                return NotFound();
 
-                throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
-            db.Customers.Remove(customerinDb);
+               // throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
+            db.Customers.Remove(customerInDb);
             db.SaveChanges();
-}
+            return Ok();
+        }
     }
 }
