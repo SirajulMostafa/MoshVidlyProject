@@ -54,7 +54,7 @@
 {
     <script>
         $(document).ready(function() {
-            $("#customers .delete-link").on("click",
+            $("#customers").on("click",".delete-link",
                 function() {
                     var button = $(this);
                     bootbox.confirm({
