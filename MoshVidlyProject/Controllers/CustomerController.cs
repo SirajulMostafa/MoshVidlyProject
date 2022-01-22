@@ -23,12 +23,7 @@ namespace MoshVidlyProject.Controllers
         }
         public ActionResult Index()
         {
-            var customers = _context.Customers.Include(c=> c.MemberShipType).ToList();
-            if (customers.Count == 0)
-            {
-                return Content("NOT DATA FOUND");
-            }
-            return View(customers);
+            return View();
 
 
         }
