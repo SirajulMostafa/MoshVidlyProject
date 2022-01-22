@@ -49,13 +49,13 @@
                 columns: [
                     {
                         data: "name",
-                        render: function (data, type, customer) {
+                        render: function(data, type, customer) {
                             return "<a href='/customer/edit/'" + customer.id + "'>" + customer.name + "</a>";
                         }
                     },
                     {
-                        data: "name"
-                    },
+                        data: "memberShipType.name"
+            },
                     {
                         data: "id",
                         render: function (data) {

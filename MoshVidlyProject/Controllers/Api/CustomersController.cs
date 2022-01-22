@@ -3,6 +3,7 @@ using MoshVidlyProject.Dto;
 using MoshVidlyProject.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 
@@ -24,7 +25,10 @@ namespace MoshVidlyProject.Controllers.Api
         // GET:/api/ Customer
         public IHttpActionResult GetCustomers()
         {
-            var customers = db.Customers.ToList().Select(Mapper.Map<Customer,CustomerDto>);
+            var customers = db.Customers.
+                Include(c=>c.MemberShipType)
+                .ToList()
+                .Select(Mapper.Map<Customer,CustomerDto>);
             return Ok(customers);
         }
         //GET /api Customers/1

@@ -18,7 +18,8 @@ namespace MoshVidlyProject.Dto
         public bool IsSubscribedToNewsletter { get; set; }
 
         public byte MemberShipTypeId { get; set; }
-     
+         
+        public MembershipTypeDto MemberShipType { get; set; }
     //    [Min18YearsIfAMember]
         public DateTime? Birthdate { get; set; }
 
