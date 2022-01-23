@@ -41,7 +41,7 @@
 
         p(document).ready(function () {
             var dataTable = p("#customers");
-            dataTable.DataTable({
+          var table=  dataTable.DataTable({
                 ajax: {
                     url: "/api/customers",
                     dataSrc: ""
@@ -80,7 +80,8 @@
                                     method: "DELETE",
                                     success: function () {
                                         // confirm("delete success ");
-                                        button.parents("tr").remove();
+                                        table.row(button.parents("tr")).remove().draw();
+                                        //  button.parents("tr").remove();
                                     }
                                 });
                             }
