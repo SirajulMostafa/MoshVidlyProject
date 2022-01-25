@@ -13,19 +13,19 @@ namespace MoshVidlyProject.Controllers.Api
     {
 
 
-        private  ServicesContext db;
+        private readonly ServicesContext _db;
         public CustomersController()
         {
-            db = new ServicesContext();
+            _db = new ServicesContext();
         }
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
         }
         // GET:/api/ Customer
         public IHttpActionResult GetCustomers()
         {
-            var customers = db.Customers.
+            var customers = _db.Customers.
                 Include(c=>c.MemberShipType)
                 .ToList()
                 .Select(Mapper.Map<Customer,CustomerDto>);
@@ -34,7 +34,7 @@ namespace MoshVidlyProject.Controllers.Api
         //GET /api Customers/1
         public IHttpActionResult GetCustomer(int id)
         {
-            var customer = db.Customers.SingleOrDefault(x => x.Id == id);
+            var customer = _db.Customers.SingleOrDefault(x => x.Id == id);
             if (customer == null)
              return NotFound(); 
             return Ok(Mapper.Map<Customer,CustomerDto>(customer));
@@ -48,8 +48,8 @@ namespace MoshVidlyProject.Controllers.Api
                return BadRequest();
 
             var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
-            db.Customers.Add(customer);
-            db.SaveChanges();
+            _db.Customers.Add(customer);
+            _db.SaveChanges();
             customerDto.Id = customer.Id;
 
             return Created(new Uri(Request.RequestUri + "/" + customer.Id), customerDto);
@@ -61,7 +61,7 @@ namespace MoshVidlyProject.Controllers.Api
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-            var customerInDb = db.Customers.SingleOrDefault(c=>c.Id==id);
+            var customerInDb = _db.Customers.SingleOrDefault(c=>c.Id==id);
             if (customerInDb == null)
                 return NotFound();
                 // throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
@@ -72,20 +72,20 @@ namespace MoshVidlyProject.Controllers.Api
             customerInDb.Birthdate = customerDto.Birthdate;
             customerInDb.IsSubscribedToNewsletter = customerDto.IsSubscribedToNewsletter;
             customerInDb.MemberShipTypeId = customerDto.MemberShipTypeId;*/
-            db.SaveChanges();
+            _db.SaveChanges();
             return Ok();
         }
         // DELETE /api/customers/1
         [HttpDelete]
         public IHttpActionResult DeleteCustomer(int id)
         {
-            var customerInDb = db.Customers.SingleOrDefault(c=>c.Id==id);
+            var customerInDb = _db.Customers.SingleOrDefault(c=>c.Id==id);
             if (customerInDb == null)
                 return NotFound();
 
                // throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
-            db.Customers.Remove(customerInDb);
-            db.SaveChanges();
+            _db.Customers.Remove(customerInDb);
+            _db.SaveChanges();
             return Ok();
         }
     }

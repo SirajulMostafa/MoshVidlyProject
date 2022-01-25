@@ -8,17 +8,9 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Movie</h4>
+    <h4>MovieFormViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Genre.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Genre.Name)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -28,11 +20,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DateAdded)
+            @Html.DisplayNameFor(model => model.GenreId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DateAdded)
+            @Html.DisplayFor(model => model.GenreId)
         </dd>
 
         <dt>
@@ -49,14 +41,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.NumberInStock)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NumberAvailable)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NumberAvailable)
         </dd>
 
     </dl>

@@ -1,12 +1,13 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
- using System.ComponentModel.DataAnnotations;
- using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web;
+using MoshVidlyProject.Models;
 
-namespace MoshVidlyProject.Models
+namespace MoshVidlyProject.Dto
 {
-    public class Movie
+    public class MovieDto
     {
 
         public int Id { get; set; }
@@ -22,7 +23,7 @@ namespace MoshVidlyProject.Models
         public byte GenreId { get; set; }
 
         public DateTime DateAdded { get; set; }
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+
         [Display(Name = "Release Date")]
         public DateTime ReleaseDate { get; set; }
 
@@ -31,5 +32,7 @@ namespace MoshVidlyProject.Models
         public byte NumberInStock { get; set; }
 
         public byte NumberAvailable { get; set; }
+    
+
     }
 }
