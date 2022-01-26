@@ -20,7 +20,7 @@ namespace MoshVidlyProject.Controllers
         // GET: Movies
         public async Task<ActionResult> Index()
         {
-            return View(await db.Movies.ToListAsync());
+            return View(await db.Movies.Include(m=>m.Genre).ToListAsync());
         }
 
         // GET: Movies/Details/5
