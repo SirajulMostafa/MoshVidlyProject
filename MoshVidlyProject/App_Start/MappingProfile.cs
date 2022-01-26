@@ -16,8 +16,12 @@ namespace MoshVidlyProject.App_Start
             Mapper.CreateMap<Customer, CustomerDto>();
             Mapper.CreateMap<MemberShipType, MembershipTypeDto>();
 
+            Mapper.CreateMap<Movie, MovieDto>();
+            Mapper.CreateMap<Genre, GenreDto>();
+
             //Dto to Domain
-            Mapper.CreateMap<CustomerDto, Customer>();  
+            Mapper.CreateMap<CustomerDto, Customer>();
+            Mapper.CreateMap<MovieDto, Movie>().ForMember(c => c.Id, opt => opt.Ignore());
         }
        
     }

@@ -6,131 +6,101 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Mvc;
+using AutoMapper;
+using MoshVidlyProject.Dto;
 using MoshVidlyProject.Models;
+using MoshVidlyProject.ViewModel;
 
 namespace MoshVidlyProject.Controllers.Api
 {
-    public class MoviesController : ApiController
-    {
-        // private ServicesContext db = new ServicesContext();
-        //
-        // // GET: Movies
-        // public async Task<IHttpActionResult> Index()
-        // {
-        //     var movies = db.Movies.Include(m => m.Genre);
-        //     return View(await movies.ToListAsync());
-        // }
-        //
-        // // GET: Movies/Details/5
-        // public async Task<IHttpActionResult> Details(int? id)
-        // {
-        //     if (id == null)
-        //     {
-        //         return BadRequest();
-        //     }
-        //     // {
-        //     //     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //     // }
-        //     Movie movie = await db.Movies.FindAsync(id);
-        //     if (movie == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //     return Ok(movie);
-        // }
-        //
-        // // GET: Movies/Create
-        // public ActionResult Create()
-        // {
-        //     ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
-        //     return View();
-        // }
-        //
-        // // POST: Movies/Create
-        // // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        // [System.Web.Http.HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public async Task<ActionResult> Create([Bind(Include = "Id,Name,GenreId,ReleaseDate,NumberInStock,NumberAvailable")] Movie movie)
-        // {
-        //     if (ModelState.IsValid)
-        //     {
-        //         movie.DateAdded = DateTime.Now;
-        //         db.Movies.Add(movie);
-        //         await db.SaveChangesAsync();
-        //         return RedirectToAction("Index");
-        //     }
-        //
-        //     ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", movie.GenreId);
-        //     return View(movie);
-        // }
-        //
-        // // GET: Movies/Edit/5
-        // public async Task<ActionResult> Edit(int? id)
-        // {
-        //     if (id == null)
-        //     {
-        //         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //     }
-        //     Movie movie = await db.Movies.FindAsync(id);
-        //     if (movie == null)
-        //     {
-        //         return HttpNotFound();
-        //     }
-        //     ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", movie.GenreId);
-        //     return View(movie);
-        // }
-        //
-        // // POST: Movies/Edit/5
-        // // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        // [System.Web.Http.HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public async Task<ActionResult> Edit([Bind(Include = "Id,Name,GenreId,DateAdded,ReleaseDate,NumberInStock,NumberAvailable")] Movie movie)
-        // {
-        //     if (ModelState.IsValid)
-        //     {
-        //         db.Entry(movie).State = EntityState.Modified;
-        //         await db.SaveChangesAsync();
-        //         return RedirectToAction("Index");
-        //     }
-        //     ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", movie.GenreId);
-        //     return View(movie);
-        // }
-        //
-        // // GET: Movies/Delete/5
-        // public async Task<ActionResult> Delete(int? id)
-        // {
-        //     if (id == null)
-        //     {
-        //         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //     }
-        //     Movie movie = await db.Movies.FindAsync(id);
-        //     if (movie == null)
-        //     {
-        //         return HttpNotFound();
-        //     }
-        //     return View(movie);
-        // }
-        //
-        // // POST: Movies/Delete/5
-        // [System.Web.Http.HttpPost, System.Web.Http.ActionName("Delete")]
-        // [ValidateAntiForgeryToken]
-        // public async Task<ActionResult> DeleteConfirmed(int id)
-        // {
-        //     Movie movie = await db.Movies.FindAsync(id);
-        //     db.Movies.Remove(movie);
-        //     await db.SaveChangesAsync();
-        //     return RedirectToAction("Index");
-        // }
-        //
-        // protected override void Dispose(bool disposing)
-        // {
-        //     if (disposing)
-        //     {
-        //         db.Dispose();
-        //     }
-        //     base.Dispose(disposing);
-        // }
+    public class MoviesController : ApiController {        
+        private readonly ServicesContext _db = new ServicesContext();
+
+            // GET: Movies
+            public IHttpActionResult GetMovies()
+            {
+            var movies = _db.Movies.
+                Include(c => c.Genre)
+                .ToList()
+                .Select(Mapper.Map<Movie, MovieDto>);
+            return Ok(movies);
+        }
+            
+            // GET: api/Movies/5
+            public IHttpActionResult GetMovie(int? id)
+            {
+                if (id == null)
+                {
+                    return BadRequest();
+                }
+                var movie = _db.Movies.Find(id);
+                if (movie == null)
+                {
+                    return NotFound();
+                }
+                return Ok(Mapper.Map<Movie,MovieDto>(movie));
+        }
+
+            // {
+            //     "name": "MD SIRAJUL",
+            //     "genre": null,
+            //     "genreId": 3,
+            //     "dateAdded": "2020-01-01T00:00:00",
+            //     "releaseDate": "2022-01-01T00:00:00",
+            //     "numberInStock": 10,
+            //     "numberAvailable": 5
+            // }
+
+        //POST /api/movies
+        [System.Web.Http.HttpPost]
+        public IHttpActionResult CreateMovie(MovieDto movieDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var movie = Mapper.Map<MovieDto,Movie>(movieDto);
+            _db.Movies.Add(movie);
+            _db.SaveChanges();
+            movieDto.Id = movie.Id;
+
+            return Created(new Uri(Request.RequestUri + "/" + movie.Id), movieDto);
+
+        }
+
+        //PUT /api/customer/1
+        [System.Web.Http.HttpPut]
+        public IHttpActionResult UpdateMovie(int id, MovieDto movieDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+            var movieInDb = _db.Movies.SingleOrDefault(c => c.Id == id);
+            if (movieInDb == null)
+                return NotFound();
+
+            Mapper.Map<MovieDto, Movie>(movieDto, movieInDb);
+            _db.SaveChanges();
+            return Ok();
+        }
+
+        // DELETE /api/customers/1
+        [System.Web.Http.HttpDelete]
+        public IHttpActionResult DeleteMovie(int id)
+        {
+            var movieInDb = _db.Movies.SingleOrDefault(c => c.Id == id);
+            if (movieInDb == null)
+                return NotFound();
+            _db.Movies.Remove(movieInDb);
+            _db.SaveChanges();
+            return Ok();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
-}
+    }
