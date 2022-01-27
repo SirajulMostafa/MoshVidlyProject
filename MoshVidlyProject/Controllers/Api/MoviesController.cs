@@ -19,11 +19,12 @@ namespace MoshVidlyProject.Controllers.Api
             // GET: Movies
             public IHttpActionResult GetMovies()
             {
-            var movies = _db.Movies.
-                Include(c => c.Genre)
-                .ToList()
+                var movies = _db.Movies.Include(c => c.Genre);
+                
+                var movieDtos = movies
+                    .ToList()
                 .Select(Mapper.Map<Movie, MovieDto>);
-            return Ok(movies);
+            return Ok(movieDtos);
         }
             
             // GET: api/Movies/5
