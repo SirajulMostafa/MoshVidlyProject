@@ -8,6 +8,7 @@ using MoshVidlyProject.ViewModel;
 
 namespace MoshVidlyProject.Controllers
 {
+    [AllowAnonymous]
     public class CustomerController : Controller
     {
         private readonly ServicesContext _context;
