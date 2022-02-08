@@ -234,6 +234,10 @@
     <Compile Include="Migrations\202202080647035_SeedingUserAndRule.designer.cs">
       <DependentUpon>202202080647035_SeedingUserAndRule.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202081643476_AddDrivingLicencePropertyOnApplicationUser.cs" />
+    <Compile Include="Migrations\202202081643476_AddDrivingLicencePropertyOnApplicationUser.designer.cs">
+      <DependentUpon>202202081643476_AddDrivingLicencePropertyOnApplicationUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -605,6 +609,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202080647035_SeedingUserAndRule.resx">
       <DependentUpon>202202080647035_SeedingUserAndRule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202081643476_AddDrivingLicencePropertyOnApplicationUser.resx">
+      <DependentUpon>202202081643476_AddDrivingLicencePropertyOnApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

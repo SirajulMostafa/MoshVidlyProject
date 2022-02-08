@@ -64,6 +64,12 @@ namespace MoshVidlyProject.Models
 
     public class RegisterViewModel
     {
+
+        [Required]
+        [StringLength(255)]
+        [Display(Name = "Driving Licence")]
+        public string DrivingLicence { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
