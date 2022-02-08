@@ -158,10 +158,10 @@ namespace MoshVidlyProject.Controllers
                     //And Register New User that user
                     //have this rule canManageMovies like admin@gmail.com
                     //comment this wrap part 
-                    var roleStore = new RoleStore<IdentityRole>(new ServicesContext());
-                    var roleManger = new RoleManager<IdentityRole>(roleStore);
-                    await  roleManger.CreateAsync(new IdentityRole("canManageMovies"));
-                    await UserManager.AddToRoleAsync(user.Id, "canManageMovies");
+                    // var roleStore = new RoleStore<IdentityRole>(new ServicesContext());
+                    // var roleManger = new RoleManager<IdentityRole>(roleStore);
+                    // await  roleManger.CreateAsync(new IdentityRole("canManageMovies"));
+                    // await UserManager.AddToRoleAsync(user.Id, "canManageMovies");
                    //comment this wrap part 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
