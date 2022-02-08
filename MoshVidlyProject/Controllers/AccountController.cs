@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MoshVidlyProject.Models;
@@ -152,6 +153,16 @@ namespace MoshVidlyProject.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+
+                    //Temp code after write this code run the project and comment these three line
+                    //And Register New User that user
+                    //have this rule canManageMovies like admin@gmail.com
+                    //comment this wrap part 
+                    var roleStore = new RoleStore<IdentityRole>(new ServicesContext());
+                    var roleManger = new RoleManager<IdentityRole>(roleStore);
+                    await  roleManger.CreateAsync(new IdentityRole("canManageMovies"));
+                    await UserManager.AddToRoleAsync(user.Id, "canManageMovies");
+                   //comment this wrap part 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
