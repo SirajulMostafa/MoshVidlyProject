@@ -18,9 +18,9 @@ namespace MoshVidlyProject.Controllers
         private ServicesContext db = new ServicesContext();
 
         // GET: Movies
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            return View(await db.Movies.ToListAsync());
+            return View();
         }
 
         // GET: Movies/Details/5
