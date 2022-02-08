@@ -18,9 +18,10 @@ namespace MoshVidlyProject.Controllers
         private ServicesContext db = new ServicesContext();
 
         // GET: Movies
+       
         public ActionResult Index()
         {
-            return View();
+            return User.IsInRole("canManageMovies") ? View("Index") : View("ReadOnlyMovieList");
         }
 
         // GET: Movies/Details/5
@@ -39,6 +40,7 @@ namespace MoshVidlyProject.Controllers
         }
         
         // GET: Movies/Create
+        [Authorize(Roles = "canManageMovies")]
         public ActionResult Create()
         {
 
@@ -57,6 +59,7 @@ namespace MoshVidlyProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "canManageMovies")]
         public async Task<ActionResult> Create(Movie movie)
         {
             var genres = db.Genres.ToList();
