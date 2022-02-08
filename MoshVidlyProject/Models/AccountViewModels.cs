@@ -6,6 +6,10 @@ namespace MoshVidlyProject.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
+        [Display(Name = "Driving Licence")]
+        public string DrivingLicence { get; set; }
+        
+        [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
